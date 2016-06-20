@@ -127,10 +127,10 @@ public class MainActivity extends AppCompatActivity {
             public void onMenuItemSelected(@IdRes int menuItemId) {
                 switch (menuItemId) {
                     case R.id.item_private:
-                        addFragment(new PrivateListFragment());
+                        addFragment(new PrivateListFragment(), PrivateListFragment.FRAGMENT_TAG);
                         break;
                     case R.id.item_group:
-                        addFragment(new GroupListFragment());
+                        addFragment(new GroupListFragment(), GroupListFragment.FRAGMENT_TAG);
                         break;
                     default:
                         break;
@@ -140,10 +140,10 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.setActiveTabColor("#C2185B");
     }
 
-    private void addFragment(Fragment fragment) {
+    private void addFragment(ListFragment fragment, String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_fragment_container, fragment);
+        fragmentTransaction.replace(R.id.frame_fragment_container, fragment, tag);
         fragmentTransaction.commit();
     }
 
