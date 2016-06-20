@@ -2,16 +2,13 @@ package nanorstudios.ie.listbuddy;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -26,9 +23,7 @@ import android.widget.Toast;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.ui.FirebaseRecyclerAdapter;
 import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnMenuTabSelectedListener;
 
 import java.util.Map;
 
@@ -38,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private Firebase mListsRef;
     private RecyclerView mRecyclerView;
     private CoordinatorLayout mCoordinatorLayout;
+    private ListFragment mListFragment;
+    private BottomBar mBottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,28 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
         mRootRef = new Firebase("https://list-buddy.firebaseio.com/");
         mListsRef = mRootRef.child("lists");
-        setupRecyclerView();
         setupToolbar();
         setupFAB();
-        setupBottomBar(savedInstanceState);
+        setupTabs();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseRecyclerAdapter<String, ListItemViewHolder> recyclerAdapter =
-                new FirebaseRecyclerAdapter<String, ListItemViewHolder>(
-                        String.class,
-                        android.R.layout.simple_list_item_2,
-                        ListItemViewHolder.class,
-                        mListsRef) {
-            @Override
-            protected void populateViewHolder(ListItemViewHolder listItemViewHolder, String s, int i) {
-                listItemViewHolder.mTextView.setText(s);
-            }
-        };
-        mRecyclerView.setAdapter(recyclerAdapter);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -94,13 +77,35 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupRecyclerView() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_list);
-        if (mRecyclerView != null) {
-            mRecyclerView.setHasFixedSize(true);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        }
+    private void setupTabs() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Private"));
+        tabLayout.addTab(tabLayout.newTab().setText("Group"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
+
 
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -119,38 +124,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setupBottomBar(Bundle savedInstanceState) {
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
-        BottomBar bottomBar = BottomBar.attach(this, savedInstanceState);
-        bottomBar.setItemsFromMenu(R.menu.menu_bottom_bar, new OnMenuTabSelectedListener() {
-            @Override
-            public void onMenuItemSelected(@IdRes int menuItemId) {
-                switch (menuItemId) {
-                    case R.id.item_private:
-                        addFragment(new PrivateListFragment(), PrivateListFragment.FRAGMENT_TAG);
-                        break;
-                    case R.id.item_group:
-                        addFragment(new GroupListFragment(), GroupListFragment.FRAGMENT_TAG);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        bottomBar.setActiveTabColor("#C2185B");
-    }
-
-    private void addFragment(ListFragment fragment, String tag) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_fragment_container, fragment, tag);
-        fragmentTransaction.commit();
-    }
-
-    private void addItem(String listItem) {
-        mListsRef.push().setValue(listItem);
-    }
-
     private void displayDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add a new list");
@@ -162,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                addItem(input.getText().toString());
+                mListFragment.addItem(input.getText().toString());
             }
         });
 
