@@ -7,7 +7,7 @@ import com.firebase.client.Firebase;
 /**
  * TODO Update this line
  *
- * @author Ronan Doyle <ronan@donedeal.ie>
+ * @author Ronan Doyle
  */
 public class ListBuddyApplication extends Application {
 
