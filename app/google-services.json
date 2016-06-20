@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "376493524358",
+    "firebase_url": "https://list-buddy.firebaseio.com",
+    "project_id": "firebase-list-buddy",
+    "storage_bucket": "firebase-list-buddy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376493524358:android:360a528c7925c22e",
+        "android_client_info": {
+          "package_name": "nanorstudios.ie.listbuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376493524358-n9d9tapju4bm7nh7736m605n7g6ah1st.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nanorstudios.ie.listbuddy",
+            "certificate_hash": "6F3A794FBF88F3BDEA7290FDB241CEF3E61EDCED"
+          }
+        },
+        {
+          "client_id": "376493524358-cqeiserj5taicknu4vbrt9qlt7qm7ph7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMKniCbjwBQMmCBmsVSGrqTq9G-BUzd7o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376493524358-cqeiserj5taicknu4vbrt9qlt7qm7ph7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
