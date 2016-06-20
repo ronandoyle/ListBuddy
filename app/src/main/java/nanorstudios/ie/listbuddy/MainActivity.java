@@ -6,6 +6,9 @@ import android.support.annotation.IdRes;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -124,10 +127,10 @@ public class MainActivity extends AppCompatActivity {
             public void onMenuItemSelected(@IdRes int menuItemId) {
                 switch (menuItemId) {
                     case R.id.item_private:
-                        // TODO: 18/06/16 Create a fragment here & migrate list above to fragment.
+                        addFragment(new PrivateListFragment());
                         break;
                     case R.id.item_group:
-                        // TODO: 18/06/16 Create a fragment here & create new list for fragment.
+                        addFragment(new GroupListFragment());
                         break;
                     default:
                         break;
@@ -135,6 +138,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         bottomBar.setActiveTabColor("#C2185B");
+    }
+
+    private void addFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_fragment_container, fragment);
+        fragmentTransaction.commit();
     }
 
     private void addItem(String listItem) {
