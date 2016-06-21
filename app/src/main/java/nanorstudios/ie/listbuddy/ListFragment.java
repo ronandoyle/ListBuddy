@@ -4,6 +4,9 @@ package nanorstudios.ie.listbuddy;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 
@@ -27,5 +30,14 @@ public class ListFragment extends Fragment {
     }
 
     public void addItem(String listItem) {
+    }
+
+    public static class ListItemViewHolder extends RecyclerView.ViewHolder {
+        TextView mTextView;
+
+        public ListItemViewHolder(View view) {
+            super(view);
+            mTextView = (TextView) view.findViewById(android.R.id.text1);
+        }
     }
 }

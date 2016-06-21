@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseRecyclerAdapter;
@@ -21,12 +22,12 @@ public class PrivateListFragment extends ListFragment {
     public static final String FRAGMENT_TAG = "PrivateListFragment";
 
     private RecyclerView mRecyclerView;
-    private Firebase mListsRef;
+    private Firebase mItemsRef;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListsRef = getRootRef().child("lists");
+        mItemsRef = getRootRef().child("items/private");
     }
 
     @Nullable
@@ -41,15 +42,15 @@ public class PrivateListFragment extends ListFragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<String, ListItemViewHolder> recyclerAdapter =
-                new FirebaseRecyclerAdapter<String, ListItemViewHolder>(
-                        String.class,
-                        android.R.layout.simple_list_item_2,
+        FirebaseRecyclerAdapter<Item, ListItemViewHolder> recyclerAdapter =
+                new FirebaseRecyclerAdapter<Item, ListItemViewHolder>(
+                        Item.class,
+                        android.R.layout.two_line_list_item,
                         ListItemViewHolder.class,
-                        mListsRef) {
+                        mItemsRef) {
                     @Override
-                    protected void populateViewHolder(ListItemViewHolder listItemViewHolder, String s, int i) {
-                        listItemViewHolder.mTextView.setText(s);
+                    protected void populateViewHolder(ListItemViewHolder listItemViewHolder, Item item, int i) {
+                        listItemViewHolder.mTextView.setText(item.getTitle());
                     }
                 };
         mRecyclerView.setAdapter(recyclerAdapter);
@@ -68,6 +69,6 @@ public class PrivateListFragment extends ListFragment {
 
     @Override
     public void addItem(String listItem) {
-        mListsRef.push().setValue(listItem);
+        mItemsRef.push().setValue(listItem);
     }
 }

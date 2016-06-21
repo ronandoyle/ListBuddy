@@ -23,18 +23,15 @@ import android.widget.Toast;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.roughike.bottombar.BottomBar;
 
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     private Firebase mRootRef;
-    private Firebase mListsRef;
     private RecyclerView mRecyclerView;
     private CoordinatorLayout mCoordinatorLayout;
     private ListFragment mListFragment;
-    private BottomBar mBottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mRootRef = new Firebase("https://list-buddy.firebaseio.com/");
-        mListsRef = mRootRef.child("lists");
         setupToolbar();
         setupFAB();
         setupTabs();
