@@ -9,6 +9,15 @@ public class Item {
     private String complete;
     private String title;
 
+    public Item() {
+
+    }
+
+    public Item(String title, String complete) {
+        this.title = title;
+        this.complete = complete;
+    }
+
     public String getTitle() {
         return title;
     }

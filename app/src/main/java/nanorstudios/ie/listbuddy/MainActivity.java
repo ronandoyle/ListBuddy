@@ -6,6 +6,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                mListFragment = (ListFragment) getSupportFragmentManager().getFragments().get(viewPager.getCurrentItem());
             }
 
             @Override
@@ -124,14 +126,22 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add a new list");
 
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
+        final TextInputLayout textInputLayout = new TextInputLayout(this);
+
+        EditText title = new EditText(this);
+        title.setInputType(InputType.TYPE_CLASS_TEXT);
+        title.setHint("Title");
+        textInputLayout.addView(title);
+        builder.setView(textInputLayout);
 
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mListFragment.addItem(input.getText().toString());
+                if (mListFragment == null || textInputLayout.getEditText() == null) {
+                    return;
+                }
+                Item item = new Item(textInputLayout.getEditText().getText().toString(), "false");
+                    mListFragment.addItem(item);
             }
         });
 

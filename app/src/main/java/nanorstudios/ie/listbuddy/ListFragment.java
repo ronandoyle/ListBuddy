@@ -29,7 +29,7 @@ public class ListFragment extends Fragment {
         return mRootRef;
     }
 
-    public void addItem(String listItem) {
+    public void addItem(Item item) {
     }
 
     public static class ListItemViewHolder extends RecyclerView.ViewHolder {

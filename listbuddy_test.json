@@ -2,10 +2,17 @@
   "items": {
   	"private": [{
 	  "complete": true,
-	  "title": "Some Title"
+	  "title": "Some Private Title One"
   	}, {
 	  "complete": true,
-	  "title": "Some Title"
+	  "title": "Some Private Title Two"
+  	}],
+  	"group": [{
+	  "complete": true,
+	  "title": "Some Group Title One"
+  	}, {
+	  "complete": true,
+	  "title": "Some Group Title Two"
   	}]
   }
 }

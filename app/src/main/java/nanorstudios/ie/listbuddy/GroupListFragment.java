@@ -68,7 +68,7 @@ public class GroupListFragment extends ListFragment {
     }
 
     @Override
-    public void addItem(String listItem) {
-        mItemsRef.push().setValue(listItem);
+    public void addItem(Item item) {
+        mItemsRef.push().setValue(item);
     }
 }
