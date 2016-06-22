@@ -45,12 +45,12 @@ public class PrivateListFragment extends ListFragment {
         FirebaseRecyclerAdapter<Item, ListItemViewHolder> recyclerAdapter =
                 new FirebaseRecyclerAdapter<Item, ListItemViewHolder>(
                         Item.class,
-                        android.R.layout.two_line_list_item,
+                        R.layout.view_list_item,
                         ListItemViewHolder.class,
                         mItemsRef) {
                     @Override
                     protected void populateViewHolder(ListItemViewHolder listItemViewHolder, Item item, int i) {
-                        listItemViewHolder.mTextView.setText(item.getTitle());
+                        listItemViewHolder.mTextViewTitle.setText(item.getTitle());
                     }
                 };
         mRecyclerView.setAdapter(recyclerAdapter);

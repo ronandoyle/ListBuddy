@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
@@ -33,11 +34,13 @@ public class ListFragment extends Fragment {
     }
 
     public static class ListItemViewHolder extends RecyclerView.ViewHolder {
-        TextView mTextView;
+        TextView mTextViewTitle;
+        CheckBox mCheckBoxCompleted;
 
         public ListItemViewHolder(View view) {
             super(view);
-            mTextView = (TextView) view.findViewById(android.R.id.text1);
+            mTextViewTitle = (TextView) view.findViewById(R.id.textViewTitle);
+            mCheckBoxCompleted = (CheckBox) view.findViewById(R.id.checkBoxCompleted);
         }
     }
 }

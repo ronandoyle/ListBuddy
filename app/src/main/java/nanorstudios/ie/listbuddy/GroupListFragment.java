@@ -50,7 +50,7 @@ public class GroupListFragment extends ListFragment {
                         mItemsRef) {
                     @Override
                     protected void populateViewHolder(ListItemViewHolder listItemViewHolder, Item item, int i) {
-                        listItemViewHolder.mTextView.setText(item.getTitle());
+                        listItemViewHolder.mTextViewTitle.setText(item.getTitle());
                     }
                 };
         mRecyclerView.setAdapter(recyclerAdapter);
