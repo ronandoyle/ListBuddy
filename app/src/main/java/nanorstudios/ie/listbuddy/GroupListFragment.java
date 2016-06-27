@@ -50,6 +50,9 @@ public class GroupListFragment extends ListFragment {
                         mItemsRef) {
                     @Override
                     protected void populateViewHolder(ListItemViewHolder listItemViewHolder, Item item, int i) {
+                        if (listItemViewHolder == null || listItemViewHolder.mTextViewTitle == null) {
+                            return;
+                        }
                         listItemViewHolder.mTextViewTitle.setText(item.getTitle());
                     }
                 };

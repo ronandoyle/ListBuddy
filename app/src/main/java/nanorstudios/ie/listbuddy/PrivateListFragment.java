@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseRecyclerAdapter;
@@ -51,6 +53,23 @@ public class PrivateListFragment extends ListFragment {
                     @Override
                     protected void populateViewHolder(ListItemViewHolder listItemViewHolder, Item item, int i) {
                         listItemViewHolder.mTextViewTitle.setText(item.getTitle());
+                        listItemViewHolder.mCheckBoxCompleted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if (isChecked) {
+                                    Toast.makeText(getActivity(), "Strike me through and complete me", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getActivity(), "To be completed...", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                        listItemViewHolder.mTextViewTitle.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(getActivity(), "I'm to be opened up in a new screen", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 };
         mRecyclerView.setAdapter(recyclerAdapter);
